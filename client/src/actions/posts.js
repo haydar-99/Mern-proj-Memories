@@ -1,4 +1,5 @@
 import * as api from '../api';
+// import posts from '../reducers/posts';
 
 //actions creators
  export const getPosts = () =>  async (dispatch) => {
@@ -16,3 +17,13 @@ import * as api from '../api';
     
     dispatch( action);
 } 
+
+export const createPost =(post) => async(dispatch) => {
+    try {
+        const {data} = await api.createPost(post)
+        dispatch({type : 'CREATE' , payload: data })
+    } catch (error) {
+        console.log(error.message)
+        
+    }
+}
