@@ -15,11 +15,16 @@ app.use('/posts',postRoutes);
 
 //DATABASE CONECCTION-CONFIG
 const CONNECTION_URL = 'mongodb+srv://mernProject:mernProject2021@cluster0.oclkj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const NEW_URL= 'mongodb://127.0.0.1:27017/local';
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(CONNECTION_URL)
-.then(() => app.listen(PORT, () => console.log(`server is running on port: ${PORT}` )))
-.catch((error) => console.log(error.message));
+mongoose.connect(NEW_URL).then( ()=> app.listen(PORT, ()=> console.log(`server is running on port: ${PORT}`))).catch(
+    (error)=> console.log(error.message)
+);
+
+// mongoose.connect(CONNECTION_URL)
+// .then(() => app.listen(PORT, () => console.log(`server is running on port: ${PORT}` )))
+// .catch((error) => console.log(error.message));
 
 
 
