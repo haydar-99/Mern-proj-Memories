@@ -1,11 +1,37 @@
 import React from 'react';
+import {Card, CardActions, CardContent, CardMedia, Button, Typography} from "@material-ui/core";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt"
+import DeleteIcon from "@material-ui/icons/Delete"
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
+import moment from "moment";
 
 
-const Post = () =>{
+const Post = ({post}) =>{
     return(
-        <h1>Posts</h1>
-
-
+        <Card>
+            <CardMedia image={post.SelectedFile} title={post.title}></CardMedia>
+            <div>
+                <Typography variant='h6'> {post.creator}</Typography>
+                <Typography variant='body2'> {moment(post.createdAt).fromNow()} </Typography>
+            </div>
+            <div>
+                <Button style={{color:"white"}} size='small' onClick={()=>{}}>
+                    <MoreHorizIcon fontSize="deafult"/>
+                </Button>
+            </div>
+            <div>
+            {/* <Typography variant='body2' color='textSecondary'> {post.tags.map((tag)=>  {tag})} </Typography> */}
+            </div>
+            <Typography  gutterBottom variant="h5" component="h2">{post.title}</Typography>
+            <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">{post.message}</Typography>
+            </CardContent>
+            <CardActions >
+                <Button size="small" color="primary" ><ThumbUpAltIcon fontSize="small" /> Like {post.likeCount} </Button>
+                <Button size="small" color="primary" ><DeleteIcon fontSize="small" /> Delete</Button>
+            </CardActions>
+        </Card>
+      
 
     );
 }

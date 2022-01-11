@@ -11,7 +11,7 @@ import * as api from '../api';
         dispatch({ type: 'FETCH_ALL', payload: data})
         
     } catch (error) {
-        console.log(error.message)
+        console.log(error.message +"  "+ "heeeeeeeeeeej")
         
     }
     
