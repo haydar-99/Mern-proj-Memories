@@ -1,30 +1,47 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import {Paper,Typography,TextField,Button} from '@material-ui/core';
 import FileBase from "react-file-base64";
 import {useDispatch} from 'react-redux';
-import { createPost } from '../../actions/posts';
+import {useSelector} from 'react-redux';
+import { createPost ,updatePost} from '../../actions/posts';
 
 
-const Form = () =>{
+const Form = ({currentId, setCurrentId}) =>{
     
+    const post = useSelector((state)=> currentId? state.posts.find((post)=>post._id==currentId):null);
     const [postData,handlePost] = useState({
         creator: "", title: "", message: "", tags:"", selectedFile: ""
 
     })
     const dispatch= useDispatch();
+    
+    useEffect(()=> {
+        if(post) handlePost(post);
+    },[post])
 
 
+    const clear= ()=>{
+        setCurrentId(null)
+        handlePost({creator: "", title: "", message: "", tags:"", selectedFile: ""})
+    }
 
    const  handleSubmit = (e) =>{
        e.preventDefault();
-       dispatch(createPost(postData));
-       console.log("post is created");
+
+       if(currentId){
+        dispatch(updatePost(currentId,postData));   
+        
+       }
+       else{dispatch(createPost(postData));
+       console.log("post is created");}
+    //    clear();
+       
 
     };
     return(
         <Paper>
             <form autoComplete='off'  onSubmit={handleSubmit} >
-            <Typography variant='h6'>Createing Memory</Typography>
+            <Typography variant='h6'>{currentId?"Editing":"Createing"} Memory</Typography>
             <TextField name='creator' label="Creator" fullWidth variant="outlined" value={postData.creator} 
             onChange={(e) => handlePost({ ...postData,creator: e.target.value})} ></TextField>
 
@@ -42,7 +59,7 @@ const Form = () =>{
                 onDone={({base64}) => handlePost({...postData, selectedFile:base64})}></FileBase>
             </div>
             <Button  variant='outlined' color="primary" size='large' type='submit' fullWidth>Submit</Button>
-            <Button variant='outlined' color="secondary" size='small'  fullWidth> Clear</Button>     {/*impelment Onclick*/}
+            <Button variant='outlined' color="secondary" size='small'  fullWidth onClick={clear}> Clear</Button>     {/*impelment Onclick*/}
 
             </form>
         </Paper>

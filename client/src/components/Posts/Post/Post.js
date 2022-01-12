@@ -6,16 +6,18 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz"
 import moment from "moment";
 
 
-const Post = ({post}) =>{
+const Post = ({post, setCurrentId}) =>{
     return(
         <Card>
-            <CardMedia image={post.SelectedFile} title={post.title}></CardMedia>
+            <CardMedia image={post.SelectedFile} title={post.title}/>
             <div>
                 <Typography variant='h6'> {post.creator}</Typography>
                 <Typography variant='body2'> {moment(post.createdAt).fromNow()} </Typography>
             </div>
             <div>
-                <Button style={{color:"white"}} size='small' onClick={()=>{}}>
+                <Button 
+                style={{color:"blue"}} size='small'
+                 onClick={()=>{setCurrentId(post._id)}}>
                     <MoreHorizIcon fontSize="deafult"/>
                 </Button>
             </div>
