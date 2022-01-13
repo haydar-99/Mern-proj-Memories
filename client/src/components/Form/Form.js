@@ -8,11 +8,12 @@ import { createPost ,updatePost} from '../../actions/posts';
 
 const Form = ({currentId, setCurrentId}) =>{
     
-    const post = useSelector((state)=> currentId? state.posts.find((post)=>post._id==currentId):null);
+    
     const [postData,handlePost] = useState({
         creator: "", title: "", message: "", tags:"", selectedFile: ""
 
     })
+    const post = useSelector((state)=> currentId? state.posts.find((post)=>post._id ===currentId):null);
     const dispatch= useDispatch();
     
     useEffect(()=> {
@@ -29,15 +30,18 @@ const Form = ({currentId, setCurrentId}) =>{
        e.preventDefault();
 
        if(currentId){
-        dispatch(updatePost(currentId,postData));   
-        
+        dispatch(updatePost(currentId, postData));   
        }
+
        else{dispatch(createPost(postData));
        console.log("post is created");}
-    //    clear();
-       
+       clear();
 
     };
+
+
+
+
     return(
         <Paper>
             <form autoComplete='off'  onSubmit={handleSubmit} >
