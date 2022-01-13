@@ -15,6 +15,7 @@ export const getPosts =  async (req ,res) =>{
       const postMessages= await postMessage.find();
       console.log(postMessages);
       
+      
       res.status(404).json(postMessages);
       
   } catch (error) {
@@ -31,6 +32,7 @@ export const createPost = async (req,res) => {
     try {
         await newPost.save();
         res.status(201).json(newPost);
+        console.log("post is created on the backend" +  `${newPost}`)
     } catch (error) {
        res.status(409)-json({message: error.message});
        
@@ -45,6 +47,7 @@ export const updatePost = async(req,res)=>{
 
     const updatedPost =  await postMessage.findByIdAndUpdate(_id, {...post,_id},{new:true})
     res.json(updatedPost);
+    console.log("post is updated on the backend" + `${newPost}`)
 
 }
 
@@ -52,9 +55,9 @@ export const updatePost = async(req,res)=>{
 export const deletePost = async (req, res) => {
     const { id } = req.params;
 
-    if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+    if (!Mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
 
-    await PostMessage.findByIdAndRemove(id);
+    await postMessage.findByIdAndRemove(id);
 
     res.json({ message: "Post deleted successfully." });
 }
